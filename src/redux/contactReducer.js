@@ -1,36 +1,37 @@
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
-import * as contactsActions from '../redux/contactsActions';
+import {
+  fetchAllContacts,
+  setContactApi,
+  deleteContactApi,
+} from '../redux/contactsOperations';
 import filter from '../redux/sliceFilter';
 
 export const items = createReducer([], {
-  [contactsActions.fetchAllContactsSuccess]: (_, { payload }) => payload,
-  [contactsActions.setContactSuccess]: (state, { payload }) => [
-    ...state,
-    payload,
-  ],
-  [contactsActions.deleteContactSuccess]: (state, { payload }) =>
+  [fetchAllContacts.fulfilled]: (_, { payload }) => payload,
+  [setContactApi.fulfilled]: (state, { payload }) => [...state, payload],
+  [deleteContactApi.fulfilled]: (state, { payload }) =>
     state.filter(contact => contact.id !== payload),
 });
 
 export const isLoading = createReducer(false, {
-  [contactsActions.fetchAllContactsRequest]: () => true,
-  [contactsActions.fetchAllContactsSuccess]: () => false,
-  [contactsActions.fetchAllContactsError]: () => false,
-  [contactsActions.setContactRequest]: () => true,
-  [contactsActions.setContactSuccess]: () => false,
-  [contactsActions.setContactError]: () => false,
-  [contactsActions.deleteContactRequest]: () => true,
-  [contactsActions.deleteContactSuccess]: () => false,
-  [contactsActions.deleteContactError]: () => false,
+  [fetchAllContacts.pending]: () => true,
+  [fetchAllContacts.fulfilled]: () => false,
+  [fetchAllContacts.rejected]: () => false,
+  [setContactApi.pending]: () => true,
+  [setContactApi.fulfilled]: () => false,
+  [setContactApi.rejected]: () => false,
+  [deleteContactApi.pending]: () => true,
+  [deleteContactApi.fulfilled]: () => false,
+  [deleteContactApi.rejected]: () => false,
 });
 
 export const error = createReducer(null, {
-  [contactsActions.fetchAllContactsError]: (_, { payload }) => payload,
-  [contactsActions.setContactError]: (_, { payload }) => payload,
-  [contactsActions.deleteContactError]: (_, { payload }) => payload,
-  [contactsActions.fetchAllContactsRequest]: () => null,
-  [contactsActions.setContactRequest]: () => null,
-  [contactsActions.deleteContactRequest]: () => null,
+  [fetchAllContacts.rejected]: (_, { payload }) => payload,
+  [setContactApi.rejected]: (_, { payload }) => payload,
+  [deleteContactApi.rejected]: (_, { payload }) => payload,
+  [fetchAllContacts.pending]: () => null,
+  [setContactApi.pending]: () => null,
+  [deleteContactApi.pending]: () => null,
 });
 
 const contacts = combineReducers({
