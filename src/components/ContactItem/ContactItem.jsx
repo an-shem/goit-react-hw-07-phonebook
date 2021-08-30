@@ -1,17 +1,27 @@
 import PropTypes from 'prop-types';
-import { Contact, Text, DeleteButton } from './ContactItem.styled';
+import {
+  Contact,
+  Text,
+  DeleteButton,
+  DataWrap,
+  PhoneLink,
+} from './ContactItem.styled';
 
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/slice-items';
+import { deleteContactApi } from '../../redux/contactsOperations';
 
-export default function ContactItem({ contact: { name, number, id } }) {
+export default function ContactItem({ contact: { name, phone, id } }) {
   const dispatch = useDispatch();
   return (
     <Contact>
       <Text>
-        - {name}: {number}
+        <DataWrap>- {name}:</DataWrap>
+        <PhoneLink href={`tel:+${phone}`}>{phone}</PhoneLink>
       </Text>
-      <DeleteButton type="button" onClick={() => dispatch(deleteContact(id))}>
+      <DeleteButton
+        type="button"
+        onClick={() => dispatch(deleteContactApi(id))}
+      >
         X
       </DeleteButton>
     </Contact>
@@ -21,6 +31,7 @@ export default function ContactItem({ contact: { name, number, id } }) {
 ContactItem.propTypes = {
   contact: PropTypes.shape({
     name: PropTypes.string,
-    number: PropTypes.string,
+    phone: PropTypes.string,
+    id: PropTypes.string,
   }).isRequired,
 };

@@ -16,6 +16,8 @@ export const Contact = styled.li`
 `;
 
 export const Text = styled.span`
+  display: flex;
+  flex-direction: column;
   margin-right: 10px;
 `;
 
@@ -35,4 +37,13 @@ export const DeleteButton = styled.button`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     color: #fff;
   }
+`;
+
+export const DataWrap = styled.span`
+  padding: 2px;
+`;
+export const PhoneLink = styled.a`
+  padding: 2px;
+  text-decoration: none;
+  color: #06406f7a;
 `;
